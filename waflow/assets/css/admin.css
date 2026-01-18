@@ -1,0 +1,32 @@
+.waflow-admin .waflow-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.waflow-admin .waflow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.waflow-admin .waflow-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.waflow-admin .waflow-timeline li {
+  border-left: 2px solid #25d366;
+  padding-left: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.waflow-admin .waflow-timeline li span {
+  display: block;
+  color: #777;
+  font-size: 12px;
+}
