@@ -3,13 +3,26 @@
   border-radius: 12px;
   padding: 20px;
   margin-top: 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .waflow-admin .waflow-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
+}
+
+.waflow-admin .waflow-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.waflow-admin .waflow-metric {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
 }
 
 .waflow-admin .waflow-timeline {
@@ -19,7 +32,7 @@
 }
 
 .waflow-admin .waflow-timeline li {
-  border-left: 2px solid #25d366;
+  border-left: 3px solid #25d366;
   padding-left: 12px;
   margin-bottom: 12px;
   font-size: 13px;
@@ -29,4 +42,25 @@
   display: block;
   color: #777;
   font-size: 12px;
+}
+
+.waflow-admin .waflow-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.waflow-admin .waflow-row input,
+.waflow-admin .waflow-row select {
+  flex: 1;
+}
+
+.waflow-admin .waflow-bulk-extra {
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+}
+
+.waflow-admin .waflow-bulk-extra input {
+  margin-left: 6px;
 }

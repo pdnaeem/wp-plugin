@@ -5,8 +5,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 $settings = get_option( 'waflow_settings', array() );
+$delete = $settings['advanced']['delete_on_uninstall'] ?? false;
 
-if ( empty( $settings['delete_on_uninstall'] ) ) {
+if ( ! $delete ) {
 	return;
 }
 
@@ -18,9 +19,7 @@ $tables = array(
 	$wpdb->prefix . 'waflow_deals',
 	$wpdb->prefix . 'waflow_automations',
 	$wpdb->prefix . 'waflow_automation_logs',
-	$wpdb->prefix . 'waflow_agents',
-	$wpdb->prefix . 'waflow_teams',
-	$wpdb->prefix . 'waflow_contact_meta',
+	$wpdb->prefix . 'waflow_queue',
 );
 
 foreach ( $tables as $table ) {
@@ -28,3 +27,5 @@ foreach ( $tables as $table ) {
 }
 
 delete_option( 'waflow_settings' );
+delete_option( 'waflow_setup_complete' );
+delete_option( 'waflow_round_robin_index' );
