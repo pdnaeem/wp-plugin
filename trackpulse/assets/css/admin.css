@@ -1,0 +1,4 @@
+.trackpulse-dashboard { display: flex; gap: 16px; margin-top: 16px; }
+.trackpulse-card { background: #fff; padding: 16px; border: 1px solid #ccd0d4; border-radius: 4px; flex: 1; }
+.trackpulse-stat { font-size: 28px; margin: 0; }
+.trackpulse-inline-form { display: inline-block; margin-right: 10px; }
