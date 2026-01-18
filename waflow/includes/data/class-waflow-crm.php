@@ -38,7 +38,74 @@ class WAFlow_CRM {
 			array( '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' )
 		);
 
-		return (int) $wpdb->insert_id;
+		$contact_id = (int) $wpdb->insert_id;
+
+		do_action( 'waflow_contact_created', $contact_id, $data );
+
+		return $contact_id;
+	}
+
+	public function update_contact( $contact_id, $data ) {
+		global $wpdb;
+
+		$allowed = array_intersect_key(
+			$data,
+			array_flip( array( 'name', 'phone', 'email', 'source', 'tags', 'notes', 'assigned_agent', 'last_activity' ) )
+		);
+
+		if ( empty( $allowed ) ) {
+			return false;
+		}
+
+		$formats = array();
+		foreach ( $allowed as $key => $value ) {
+			$formats[] = ( 'assigned_agent' === $key ) ? '%d' : '%s';
+		}
+
+		$updated = $wpdb->update(
+			$wpdb->prefix . 'waflow_contacts',
+			$allowed,
+			array( 'id' => $contact_id ),
+			$formats,
+			array( '%d' )
+		);
+
+		if ( false !== $updated ) {
+			do_action( 'waflow_contact_updated', $contact_id, $allowed );
+		}
+
+		return $updated;
+	}
+
+	public function find_contact_by_phone_or_email( $phone, $email ) {
+		global $wpdb;
+
+		$phone = sanitize_text_field( $phone );
+		$email = sanitize_email( $email );
+
+		if ( empty( $phone ) && empty( $email ) ) {
+			return 0;
+		}
+
+		if ( ! empty( $phone ) && ! empty( $email ) ) {
+			$query = $wpdb->prepare(
+				"SELECT id FROM {$wpdb->prefix}waflow_contacts WHERE phone = %s OR email = %s LIMIT 1",
+				$phone,
+				$email
+			);
+		} elseif ( ! empty( $phone ) ) {
+			$query = $wpdb->prepare(
+				"SELECT id FROM {$wpdb->prefix}waflow_contacts WHERE phone = %s LIMIT 1",
+				$phone
+			);
+		} else {
+			$query = $wpdb->prepare(
+				"SELECT id FROM {$wpdb->prefix}waflow_contacts WHERE email = %s LIMIT 1",
+				$email
+			);
+		}
+
+		return (int) $wpdb->get_var( $query );
 	}
 
 	public function add_activity( $contact_id, $type, $payload = '' ) {

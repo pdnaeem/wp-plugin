@@ -22,6 +22,7 @@ define( 'WAFLOW_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 define( 'WAFLOW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
+require_once WAFLOW_PLUGIN_DIR . 'includes/class-waflow-settings.php';
 require_once WAFLOW_PLUGIN_DIR . 'includes/class-waflow-activator.php';
 require_once WAFLOW_PLUGIN_DIR . 'includes/class-waflow-plugin.php';
 

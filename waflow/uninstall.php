@@ -18,6 +18,9 @@ $tables = array(
 	$wpdb->prefix . 'waflow_deals',
 	$wpdb->prefix . 'waflow_automations',
 	$wpdb->prefix . 'waflow_automation_logs',
+	$wpdb->prefix . 'waflow_agents',
+	$wpdb->prefix . 'waflow_teams',
+	$wpdb->prefix . 'waflow_contact_meta',
 );
 
 foreach ( $tables as $table ) {
