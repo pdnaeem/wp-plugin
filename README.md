@@ -27,6 +27,7 @@ Production-ready, shared-hosting friendly implementation of a COMLEAM-like syste
 
 3. **Environment Setup**
    - Copy `.env.example` to `.env` and fill in database credentials.
+   - Set an `INSTALLER_KEY` value that will be used by the installer wizard.
    - Generate app key:
      ```bash
      php artisan key:generate
@@ -51,8 +52,16 @@ Production-ready, shared-hosting friendly implementation of a COMLEAM-like syste
 7. **File Upload Limits**
    - Ensure `upload_max_filesize` and `post_max_size` are large enough.
 
-### Optional Install Wizard
-If you do not have terminal access on cPanel, add a small installer script that calls migrations and writes `.env` securely, or use cPanel's Laravel Toolkit if available.
+### Optional Install Wizard (No SSH)
+If you do not have terminal access on cPanel, you can use the built-in installer:
+
+1. Set `INSTALLER_KEY` in `.env` or `.env.example` before uploading.
+2. Visit `/install` in the browser.
+3. Provide the installer key, app URL, and database credentials.
+4. The installer will write `.env`, generate the app key, run migrations/seeders, and create the storage link.
+5. After completion it writes `storage/app/installed.lock` to prevent re-running.
+
+If you do not want the installer exposed, remove the `/install` routes after setup.
 
 ## CSV Templates
 Templates are located in `templates/`.

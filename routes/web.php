@@ -5,6 +5,7 @@ use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmissionFunctionController;
 use App\Http\Controllers\GeometryController;
+use App\Http\Controllers\InstallController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SubstanceController;
@@ -12,6 +13,9 @@ use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => redirect()->route('dashboard'));
+
+Route::get('/install', [InstallController::class, 'index'])->name('install.index');
+Route::post('/install', [InstallController::class, 'store'])->name('install.store');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
