@@ -1,0 +1,48 @@
+{
+  "name": "comleam/comleam-web",
+  "description": "COMLEAM-like construction materials leaching/emissions modeling web app",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": "^8.1",
+    "laravel/framework": "^11.0",
+    "laravel/tinker": "^2.9",
+    "laravel/breeze": "^2.0",
+    "dompdf/dompdf": "^2.0",
+    "symfony/uid": "^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5",
+    "fakerphp/faker": "^1.23",
+    "mockery/mockery": "^1.6",
+    "nunomaduro/collision": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "@php artisan package:discover --ansi"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": []
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
