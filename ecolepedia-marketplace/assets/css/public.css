@@ -1,0 +1,105 @@
+:root {
+  --ecolepedia-primary: #3558f4;
+  --ecolepedia-bg: #f5f7fb;
+  --ecolepedia-text: #1a1f36;
+  --ecolepedia-muted: #5c6b8a;
+  --ecolepedia-radius: 14px;
+  --ecolepedia-shadow: 0 12px 30px rgba(19, 33, 68, 0.08);
+  --ecolepedia-spacing: 24px;
+}
+
+.ecolepedia-app {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ecolepedia-text);
+  background: var(--ecolepedia-bg);
+  padding: var(--ecolepedia-spacing);
+  border-radius: var(--ecolepedia-radius);
+}
+
+.ecolepedia-card {
+  background: #fff;
+  border-radius: var(--ecolepedia-radius);
+  box-shadow: var(--ecolepedia-shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.ecolepedia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.ecolepedia-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ecolepedia-primary);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ecolepedia-button.secondary {
+  background: #eef2ff;
+  color: var(--ecolepedia-primary);
+}
+
+.ecolepedia-form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.ecolepedia-form input,
+.ecolepedia-form select,
+.ecolepedia-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #d7deef;
+  background: #fff;
+  font-size: 14px;
+}
+
+.ecolepedia-form textarea {
+  min-height: 120px;
+}
+
+.ecolepedia-sidebar {
+  background: #fff;
+  border-radius: var(--ecolepedia-radius);
+  padding: 20px;
+  box-shadow: var(--ecolepedia-shadow);
+}
+
+.ecolepedia-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ecolepedia-table th,
+.ecolepedia-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eef1f8;
+}
+
+.ecolepedia-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: var(--ecolepedia-primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .ecolepedia-app {
+    padding: 16px;
+  }
+}
