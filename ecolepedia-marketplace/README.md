@@ -11,7 +11,7 @@ A full writing-service marketplace plugin for Ecolepedia with order flow, dashbo
 1. Upload the `ecolepedia-marketplace` folder to `/wp-content/plugins/`.
 2. Activate **Ecolepedia Writing Marketplace**.
 3. The plugin will create required pages automatically.
-4. Visit **Ecolepedia > Settings** to customize branding, pricing, payments, emails, and security.
+4. Visit **Ecolepedia > Settings** to customize branding, typography, pricing, payments, emails, and security.
 
 ## Shortcodes
 - `[ecolepedia_customer_register]`
@@ -24,6 +24,9 @@ A full writing-service marketplace plugin for Ecolepedia with order flow, dashbo
 - `[ecolepedia_order_details id=""]`
 - `[ecolepedia_how_it_works]`
 - `[ecolepedia_pricing_table]`
+
+## Catalog Management
+Manage subjects and document types in **Ecolepedia > Subjects** and **Ecolepedia > Document Types**. Use the **Catalog** settings tab to sync large lists in bulk.
 
 ## Template Overrides
 Copy any template from `ecolepedia-marketplace/templates/` into:

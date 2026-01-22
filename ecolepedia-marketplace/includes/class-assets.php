@@ -20,10 +20,13 @@ class Assets {
         );
         $settings = Settings::get();
         $inline = sprintf(
-            ':root{--ecolepedia-primary:%1$s;--ecolepedia-secondary:%2$s;--ecolepedia-bg:%3$s;}',
+            ':root{--ecolepedia-primary:%1$s;--ecolepedia-secondary:%2$s;--ecolepedia-bg:%3$s;--ecolepedia-font:%4$s;--ecolepedia-radius:%5$spx;--ecolepedia-shadow:%6$s;}',
             esc_html($settings['accent_color']),
             esc_html($settings['secondary_color']),
-            esc_html($settings['background_color'])
+            esc_html($settings['background_color']),
+            esc_html($settings['font_family']),
+            esc_html((string) $settings['radius']),
+            esc_html($settings['shadow'])
         );
         wp_add_inline_style('ecolepedia-marketplace-public', $inline);
         wp_enqueue_script(

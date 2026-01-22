@@ -10,6 +10,7 @@ class Settings {
 
     public function register(): void {
         add_action('admin_init', [__CLASS__, 'register_settings']);
+        add_action('update_option_' . self::OPTION_KEY, [__CLASS__, 'sync_taxonomies'], 10, 2);
     }
 
     public static function defaults(): array {
@@ -18,6 +19,9 @@ class Settings {
             'accent_color' => '#3558F4',
             'secondary_color' => '#10162F',
             'background_color' => '#F5F7FB',
+            'font_family' => 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+            'radius' => 14,
+            'shadow' => '0 12px 30px rgba(19, 33, 68, 0.08)',
             'logo_id' => 0,
             'button_style' => 'pill',
             'file_max_mb' => 20,
@@ -37,6 +41,9 @@ class Settings {
             'stripe_secret_key' => '',
             'paypal_client_id' => '',
             'paypal_secret_key' => '',
+            'subjects_list' => '',
+            'document_types_list' => '',
+            'sync_taxonomies' => false,
             'email_templates' => [
                 'order_created' => __('Hi {{customer_name}}, your order {{order_id}} has been created.', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
                 'author_assigned' => __('Your order {{order_id}} has been assigned to {{author_name}}.', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
@@ -72,6 +79,9 @@ class Settings {
         add_settings_field('accent_color', __('Accent Color', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_accent_color'], 'ecolepedia-marketplace-general', 'ecolepedia_marketplace_general');
         add_settings_field('secondary_color', __('Secondary Color', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_secondary_color'], 'ecolepedia-marketplace-general', 'ecolepedia_marketplace_general');
         add_settings_field('background_color', __('Background Color', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_background_color'], 'ecolepedia-marketplace-general', 'ecolepedia_marketplace_general');
+        add_settings_field('font_family', __('Font Family', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_font_family'], 'ecolepedia-marketplace-general', 'ecolepedia_marketplace_general');
+        add_settings_field('radius', __('Corner Radius (px)', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_radius'], 'ecolepedia-marketplace-general', 'ecolepedia_marketplace_general');
+        add_settings_field('shadow', __('Card Shadow', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_shadow'], 'ecolepedia-marketplace-general', 'ecolepedia_marketplace_general');
 
         add_settings_section('ecolepedia_marketplace_pages', __('Pages', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), '__return_false', 'ecolepedia-marketplace-pages');
         add_settings_field('page_customer_register', __('Customer Register Page', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_page_customer_register'], 'ecolepedia-marketplace-pages', 'ecolepedia_marketplace_pages');
@@ -83,6 +93,11 @@ class Settings {
         add_settings_field('page_author_dashboard', __('Author Dashboard Page', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_page_author_dashboard'], 'ecolepedia-marketplace-pages', 'ecolepedia_marketplace_pages');
         add_settings_field('page_how_it_works', __('How It Works Page', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_page_how_it_works'], 'ecolepedia-marketplace-pages', 'ecolepedia_marketplace_pages');
         add_settings_field('page_pricing', __('Pricing Page', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_page_pricing'], 'ecolepedia-marketplace-pages', 'ecolepedia_marketplace_pages');
+
+        add_settings_section('ecolepedia_marketplace_catalog', __('Catalog', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), '__return_false', 'ecolepedia-marketplace-catalog');
+        add_settings_field('subjects_list', __('Subjects (one per line)', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_subjects_list'], 'ecolepedia-marketplace-catalog', 'ecolepedia_marketplace_catalog');
+        add_settings_field('document_types_list', __('Document Types (one per line)', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_document_types_list'], 'ecolepedia-marketplace-catalog', 'ecolepedia_marketplace_catalog');
+        add_settings_field('sync_taxonomies', __('Sync Taxonomies from List', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_sync_taxonomies'], 'ecolepedia-marketplace-catalog', 'ecolepedia_marketplace_catalog');
 
         add_settings_section('ecolepedia_marketplace_orders', __('Orders', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), '__return_false', 'ecolepedia-marketplace-orders');
         add_settings_field('revision_limit', __('Revision Limit', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), [__CLASS__, 'field_revision_limit'], 'ecolepedia-marketplace-orders', 'ecolepedia_marketplace_orders');
@@ -123,6 +138,9 @@ class Settings {
         $output['accent_color'] = sanitize_hex_color($input['accent_color'] ?? $defaults['accent_color']) ?: $defaults['accent_color'];
         $output['secondary_color'] = sanitize_hex_color($input['secondary_color'] ?? $defaults['secondary_color']) ?: $defaults['secondary_color'];
         $output['background_color'] = sanitize_hex_color($input['background_color'] ?? $defaults['background_color']) ?: $defaults['background_color'];
+        $output['font_family'] = sanitize_text_field($input['font_family'] ?? $defaults['font_family']);
+        $output['radius'] = max(0, absint($input['radius'] ?? $defaults['radius']));
+        $output['shadow'] = sanitize_text_field($input['shadow'] ?? $defaults['shadow']);
         $output['logo_id'] = absint($input['logo_id'] ?? 0);
         $output['button_style'] = sanitize_text_field($input['button_style'] ?? $defaults['button_style']);
         $output['file_max_mb'] = max(1, absint($input['file_max_mb'] ?? $defaults['file_max_mb']));
@@ -144,6 +162,9 @@ class Settings {
         $output['stripe_secret_key'] = sanitize_text_field($input['stripe_secret_key'] ?? $defaults['stripe_secret_key']);
         $output['paypal_client_id'] = sanitize_text_field($input['paypal_client_id'] ?? $defaults['paypal_client_id']);
         $output['paypal_secret_key'] = sanitize_text_field($input['paypal_secret_key'] ?? $defaults['paypal_secret_key']);
+        $output['subjects_list'] = wp_kses_post($input['subjects_list'] ?? $defaults['subjects_list']);
+        $output['document_types_list'] = wp_kses_post($input['document_types_list'] ?? $defaults['document_types_list']);
+        $output['sync_taxonomies'] = !empty($input['sync_taxonomies']);
         $output['email_templates'] = [
             'order_created' => wp_kses_post($input['email_templates']['order_created'] ?? $defaults['email_templates']['order_created']),
             'author_assigned' => wp_kses_post($input['email_templates']['author_assigned'] ?? $defaults['email_templates']['author_assigned']),
@@ -153,6 +174,13 @@ class Settings {
         $output['pages'] = array_map('absint', $pages);
 
         return $output;
+    }
+
+    public static function sync_taxonomies(array $old_value, array $value): void {
+        if (empty($value['sync_taxonomies'])) {
+            return;
+        }
+        Orders::sync_taxonomies($value);
     }
 
     public static function field_brand_name(): void {
@@ -197,6 +225,33 @@ class Settings {
             '<input type="text" name="%s[background_color]" value="%s" class="regular-text" />',
             esc_attr(self::OPTION_KEY),
             esc_attr($options['background_color'])
+        );
+    }
+
+    public static function field_font_family(): void {
+        $options = self::get();
+        printf(
+            '<input type="text" name="%s[font_family]" value="%s" class="regular-text" />',
+            esc_attr(self::OPTION_KEY),
+            esc_attr($options['font_family'])
+        );
+    }
+
+    public static function field_radius(): void {
+        $options = self::get();
+        printf(
+            '<input type="number" min="0" name="%s[radius]" value="%d" class="small-text" />',
+            esc_attr(self::OPTION_KEY),
+            (int) $options['radius']
+        );
+    }
+
+    public static function field_shadow(): void {
+        $options = self::get();
+        printf(
+            '<input type="text" name="%s[shadow]" value="%s" class="regular-text" />',
+            esc_attr(self::OPTION_KEY),
+            esc_attr($options['shadow'])
         );
     }
 
@@ -251,6 +306,35 @@ class Settings {
     public static function field_page_pricing(): void {
         $options = self::get();
         self::render_page_dropdown('ecolepedia_pricing', (int) $options['pages']['ecolepedia_pricing']);
+    }
+
+    public static function field_subjects_list(): void {
+        $options = self::get();
+        printf(
+            '<textarea name="%s[subjects_list]" class="large-text" rows="6">%s</textarea>',
+            esc_attr(self::OPTION_KEY),
+            esc_textarea($options['subjects_list'])
+        );
+    }
+
+    public static function field_document_types_list(): void {
+        $options = self::get();
+        printf(
+            '<textarea name="%s[document_types_list]" class="large-text" rows="6">%s</textarea>',
+            esc_attr(self::OPTION_KEY),
+            esc_textarea($options['document_types_list'])
+        );
+    }
+
+    public static function field_sync_taxonomies(): void {
+        $options = self::get();
+        printf(
+            '<label><input type="checkbox" name="%s[sync_taxonomies]" value="1" %s /> %s</label><p class="description">%s</p>',
+            esc_attr(self::OPTION_KEY),
+            checked(!empty($options['sync_taxonomies']), true, false),
+            esc_html__('Update taxonomies from the lists above when saving settings.', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            esc_html__('Existing terms remain; new ones are added.', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN)
+        );
     }
 
     public static function field_file_max(): void {

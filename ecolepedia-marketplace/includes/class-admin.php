@@ -21,6 +21,8 @@ class Admin {
         );
 
         add_submenu_page('ecolepedia-marketplace', __('Orders', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), __('Orders', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), ECOLEPEDIA_MARKETPLACE_CAP_ORDERS, 'edit.php?post_type=ecolepedia_order');
+        add_submenu_page('ecolepedia-marketplace', __('Subjects', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), __('Subjects', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), ECOLEPEDIA_MARKETPLACE_CAP_SETTINGS, 'edit-tags.php?taxonomy=ecolepedia_subject&post_type=ecolepedia_order');
+        add_submenu_page('ecolepedia-marketplace', __('Document Types', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), __('Document Types', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), ECOLEPEDIA_MARKETPLACE_CAP_SETTINGS, 'edit-tags.php?taxonomy=ecolepedia_document_type&post_type=ecolepedia_order');
         add_submenu_page('ecolepedia-marketplace', __('Settings', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), __('Settings', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), ECOLEPEDIA_MARKETPLACE_CAP_SETTINGS, 'ecolepedia-marketplace', [$this, 'render_settings_page']);
         add_submenu_page('ecolepedia-marketplace', __('System Status', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), __('System Status', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), ECOLEPEDIA_MARKETPLACE_CAP_SETTINGS, 'ecolepedia-marketplace-status', [$this, 'render_status_page']);
         add_submenu_page('ecolepedia-marketplace', __('Demo Mode', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), __('Demo Mode', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN), ECOLEPEDIA_MARKETPLACE_CAP_SETTINGS, 'ecolepedia-marketplace-demo', [$this, 'render_demo_page']);
@@ -34,6 +36,7 @@ class Admin {
         $tabs = [
             'general' => __('General', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
             'pages' => __('Pages', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            'catalog' => __('Catalog', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
             'orders' => __('Orders', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
             'pricing' => __('Pricing', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
             'payments' => __('Payments', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),

@@ -62,21 +62,19 @@ class Orders {
     }
 
     public static function seed_taxonomies(): void {
-        $subjects = [
-            'Accounting', 'Architecture', 'Art History', 'Biology', 'Business', 'Chemistry', 'Communications',
-            'Computer Science', 'Creative Writing', 'Criminal Justice', 'Economics', 'Education', 'Engineering',
-            'Environmental Science', 'Ethics', 'Finance', 'Geography', 'Healthcare', 'History', 'Human Resources',
-            'International Relations', 'Journalism', 'Law', 'Literature', 'Management', 'Marketing', 'Mathematics',
-            'Medicine', 'Music', 'Nursing', 'Philosophy', 'Physics', 'Political Science', 'Psychology', 'Public Health',
-            'Sociology', 'Statistics', 'Technology', 'Theology', 'Tourism'
-        ];
+        $settings = Settings::get();
+        self::sync_taxonomies($settings);
+    }
 
-        $document_types = [
-            'Essay', 'Research Paper', 'Case Study', 'Term Paper', 'Report', 'Thesis', 'Dissertation',
-            'Annotated Bibliography', 'Literature Review', 'Lab Report', 'Presentation', 'PowerPoint',
-            'Admission Essay', 'Personal Statement', 'Book Review', 'Movie Review', 'Speech', 'Article',
-            'Summary', 'Coursework'
-        ];
+    public static function sync_taxonomies(array $settings): void {
+        $subjects = self::parse_list($settings['subjects_list'] ?? '');
+        if (empty($subjects)) {
+            $subjects = self::default_subjects();
+        }
+        $document_types = self::parse_list($settings['document_types_list'] ?? '');
+        if (empty($document_types)) {
+            $document_types = self::default_document_types();
+        }
 
         foreach ($subjects as $subject) {
             if (!term_exists($subject, 'ecolepedia_subject')) {
@@ -89,6 +87,35 @@ class Orders {
                 wp_insert_term($type, 'ecolepedia_document_type');
             }
         }
+    }
+
+    private static function parse_list(string $raw): array {
+        $lines = array_filter(array_map('trim', preg_split('/\r\n|\r|\n/', $raw)));
+        return array_values(array_unique($lines));
+    }
+
+    private static function default_subjects(): array {
+        return [
+            'Accounting', 'Aerospace Engineering', 'Anthropology', 'Architecture', 'Art History', 'Biology',
+            'Biomedical Engineering', 'Business', 'Chemistry', 'Civil Engineering', 'Communications',
+            'Computer Science', 'Creative Writing', 'Criminal Justice', 'Cybersecurity', 'Data Science',
+            'Dentistry', 'Economics', 'Education', 'Electrical Engineering', 'Engineering', 'Environmental Science',
+            'Ethics', 'Finance', 'Geography', 'Healthcare', 'History', 'Hospitality', 'Human Resources',
+            'International Relations', 'Journalism', 'Law', 'Literature', 'Management', 'Marketing',
+            'Mathematics', 'Mechanical Engineering', 'Medicine', 'Music', 'Nursing', 'Philosophy', 'Physics',
+            'Political Science', 'Psychology', 'Public Health', 'Public Policy', 'Sociology', 'Statistics',
+            'Technology', 'Theology', 'Tourism', 'Visual Arts'
+        ];
+    }
+
+    private static function default_document_types(): array {
+        return [
+            'Admission Essay', 'Annotated Bibliography', 'Article', 'Article Review', 'Book Review',
+            'Business Plan', 'Capstone Project', 'Case Study', 'Coursework', 'Cover Letter',
+            'Creative Writing', 'Dissertation', 'Essay', 'Lab Report', 'Literature Review',
+            'Personal Statement', 'Presentation', 'Proposal', 'Research Paper', 'Report',
+            'Resume', 'Speech', 'Term Paper', 'Thesis', 'White Paper'
+        ];
     }
 
     public static function get_statuses(): array {

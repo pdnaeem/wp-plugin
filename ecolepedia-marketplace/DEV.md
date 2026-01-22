@@ -10,6 +10,10 @@
 ## Required Pages
 On activation, `Pages::create_required_pages()` creates the customer, author, checkout, and dashboard pages with their shortcodes pre-filled.
 
+## Taxonomy Management
+- Default subjects and document types are seeded on activation via `Orders::seed_taxonomies()`.
+- Admins can bulk-sync custom lists from **Settings > Catalog**.
+
 ## Extending Payment Gateways
 1. Add a gateway class under `/includes` (e.g., `class-gateway-stripe.php`).
 2. Implement a `charge()` method and hook into checkout handling.
@@ -18,7 +22,6 @@ On activation, `Pages::create_required_pages()` creates the customer, author, ch
 
 ## Data Model Notes
 - Orders are a CPT (`ecolepedia_order`).
-- Subjects and document types are seeded on activation via `Orders::seed_taxonomies()`.
 - Heavy relational data (messages, transactions, revisions, author profiles) uses custom tables created via `Database::install()`.
 
 ## Security Checklist
