@@ -30,6 +30,7 @@ class Plugin {
         (new Uploads())->register();
         (new Cron())->register();
         (new Demo_Data())->register();
+        add_action('admin_init', [Pages::class, 'maybe_create_required_pages']);
     }
 
     public static function activate(): void {

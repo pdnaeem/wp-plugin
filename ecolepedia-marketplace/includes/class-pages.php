@@ -7,6 +7,28 @@ if (!defined('ABSPATH')) {
 
 class Pages {
     public static function create_required_pages(): void {
+        self::create_pages();
+    }
+
+    public static function maybe_create_required_pages(): void {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+        $options = Settings::get();
+        $pages = $options['pages'] ?? [];
+        $missing = false;
+        foreach ($pages as $page_id) {
+            if (empty($page_id) || get_post_status($page_id) === false) {
+                $missing = true;
+                break;
+            }
+        }
+        if ($missing) {
+            self::create_pages();
+        }
+    }
+
+    private static function create_pages(): void {
         $pages = [
             'ecolepedia_customer_register' => [
                 'title' => __('Customer Registration', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
@@ -61,6 +83,7 @@ class Pages {
                 'post_content' => $page['shortcode'],
                 'post_status' => 'publish',
                 'post_type' => 'page',
+                'post_author' => 0,
             ]);
             if ($page_id && !is_wp_error($page_id)) {
                 $options['pages'][$key] = $page_id;
