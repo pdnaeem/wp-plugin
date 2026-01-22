@@ -1,11 +1,13 @@
 :root {
   --ecolepedia-primary: #3558f4;
+  --ecolepedia-secondary: #10162f;
   --ecolepedia-bg: #f5f7fb;
   --ecolepedia-text: #1a1f36;
   --ecolepedia-muted: #5c6b8a;
   --ecolepedia-radius: 14px;
   --ecolepedia-shadow: 0 12px 30px rgba(19, 33, 68, 0.08);
   --ecolepedia-spacing: 24px;
+  --ecolepedia-border: #e3e8f7;
 }
 
 .ecolepedia-app {
@@ -16,6 +18,42 @@
   border-radius: var(--ecolepedia-radius);
 }
 
+.ecolepedia-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+}
+
+.ecolepedia-sidebar {
+  background: #fff;
+  border-radius: var(--ecolepedia-radius);
+  padding: 20px;
+  box-shadow: var(--ecolepedia-shadow);
+  height: fit-content;
+}
+
+.ecolepedia-sidebar h3 {
+  margin-top: 0;
+  font-size: 16px;
+  color: var(--ecolepedia-secondary);
+}
+
+.ecolepedia-nav {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+}
+
+.ecolepedia-nav li {
+  margin-bottom: 10px;
+}
+
+.ecolepedia-nav a {
+  color: var(--ecolepedia-muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+
 .ecolepedia-card {
   background: #fff;
   border-radius: var(--ecolepedia-radius);
@@ -24,10 +62,32 @@
   margin-bottom: 20px;
 }
 
+.ecolepedia-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 .ecolepedia-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
+}
+
+.ecolepedia-stepper {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.ecolepedia-stepper span {
+  background: #eef2ff;
+  color: var(--ecolepedia-primary);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .ecolepedia-button {
@@ -61,20 +121,13 @@
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid #d7deef;
+  border: 1px solid var(--ecolepedia-border);
   background: #fff;
   font-size: 14px;
 }
 
 .ecolepedia-form textarea {
   min-height: 120px;
-}
-
-.ecolepedia-sidebar {
-  background: #fff;
-  border-radius: var(--ecolepedia-radius);
-  padding: 20px;
-  box-shadow: var(--ecolepedia-shadow);
 }
 
 .ecolepedia-table {
@@ -96,6 +149,22 @@
   color: var(--ecolepedia-primary);
   font-size: 12px;
   font-weight: 600;
+}
+
+.ecolepedia-muted {
+  color: var(--ecolepedia-muted);
+}
+
+@media (max-width: 960px) {
+  .ecolepedia-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ecolepedia-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
 }
 
 @media (max-width: 768px) {

@@ -18,7 +18,8 @@ class Cron {
     }
 
     public function run(): void {
-        $cleanup_days = 7;
+        $settings = Settings::get();
+        $cleanup_days = max(1, (int) ($settings['order_cleanup_days'] ?? 7));
         $args = [
             'post_type' => 'ecolepedia_order',
             'post_status' => 'draft',

@@ -30,11 +30,35 @@ class Admin {
         if (!current_user_can(ECOLEPEDIA_MARKETPLACE_CAP_SETTINGS)) {
             return;
         }
+
+        $tabs = [
+            'general' => __('General', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            'pages' => __('Pages', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            'orders' => __('Orders', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            'pricing' => __('Pricing', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            'payments' => __('Payments', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            'commissions' => __('Commissions', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            'security' => __('Security', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+            'emails' => __('Emails', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),
+        ];
+        $active = sanitize_key($_GET['tab'] ?? 'general');
+        if (!isset($tabs[$active])) {
+            $active = 'general';
+        }
+
         echo '<div class="wrap ecolepedia-admin">';
         echo '<h1>' . esc_html__('Ecolepedia Marketplace Settings', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN) . '</h1>';
+        echo '<nav class="nav-tab-wrapper">';
+        foreach ($tabs as $key => $label) {
+            $class = $active === $key ? 'nav-tab nav-tab-active' : 'nav-tab';
+            $url = esc_url(add_query_arg(['tab' => $key], menu_page_url('ecolepedia-marketplace', false)));
+            echo '<a class="' . esc_attr($class) . '" href="' . $url . '">' . esc_html($label) . '</a>';
+        }
+        echo '</nav>';
+
         echo '<form method="post" action="options.php">';
         settings_fields('ecolepedia_marketplace_settings');
-        do_settings_sections('ecolepedia-marketplace');
+        do_settings_sections('ecolepedia-marketplace-' . $active);
         submit_button();
         echo '</form>';
         echo '</div>';

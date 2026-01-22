@@ -1,6 +1,6 @@
 # Ecolepedia Writing Marketplace
 
-A production-ready WordPress plugin for running a writing-service marketplace with orders, author applications, dashboards, and configurable settings.
+A full writing-service marketplace plugin for Ecolepedia with order flow, dashboards, messaging tables, and robust admin configuration.
 
 ## Requirements
 - WordPress 6.2+
@@ -10,8 +10,8 @@ A production-ready WordPress plugin for running a writing-service marketplace wi
 ## Installation
 1. Upload the `ecolepedia-marketplace` folder to `/wp-content/plugins/`.
 2. Activate **Ecolepedia Writing Marketplace**.
-3. Visit **Ecolepedia > Settings** to configure branding, uploads, and payment keys.
-4. Use the shortcodes below to build pages.
+3. The plugin will create required pages automatically.
+4. Visit **Ecolepedia > Settings** to customize branding, pricing, payments, emails, and security.
 
 ## Shortcodes
 - `[ecolepedia_customer_register]`

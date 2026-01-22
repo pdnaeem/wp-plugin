@@ -37,7 +37,9 @@ class Plugin {
         Database::install();
         Orders::register_post_type();
         Orders::register_taxonomies();
+        Orders::seed_taxonomies();
         Settings::register_settings();
+        Pages::create_required_pages();
         flush_rewrite_rules();
     }
 

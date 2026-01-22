@@ -61,6 +61,36 @@ class Orders {
         ]);
     }
 
+    public static function seed_taxonomies(): void {
+        $subjects = [
+            'Accounting', 'Architecture', 'Art History', 'Biology', 'Business', 'Chemistry', 'Communications',
+            'Computer Science', 'Creative Writing', 'Criminal Justice', 'Economics', 'Education', 'Engineering',
+            'Environmental Science', 'Ethics', 'Finance', 'Geography', 'Healthcare', 'History', 'Human Resources',
+            'International Relations', 'Journalism', 'Law', 'Literature', 'Management', 'Marketing', 'Mathematics',
+            'Medicine', 'Music', 'Nursing', 'Philosophy', 'Physics', 'Political Science', 'Psychology', 'Public Health',
+            'Sociology', 'Statistics', 'Technology', 'Theology', 'Tourism'
+        ];
+
+        $document_types = [
+            'Essay', 'Research Paper', 'Case Study', 'Term Paper', 'Report', 'Thesis', 'Dissertation',
+            'Annotated Bibliography', 'Literature Review', 'Lab Report', 'Presentation', 'PowerPoint',
+            'Admission Essay', 'Personal Statement', 'Book Review', 'Movie Review', 'Speech', 'Article',
+            'Summary', 'Coursework'
+        ];
+
+        foreach ($subjects as $subject) {
+            if (!term_exists($subject, 'ecolepedia_subject')) {
+                wp_insert_term($subject, 'ecolepedia_subject');
+            }
+        }
+
+        foreach ($document_types as $type) {
+            if (!term_exists($type, 'ecolepedia_document_type')) {
+                wp_insert_term($type, 'ecolepedia_document_type');
+            }
+        }
+    }
+
     public static function get_statuses(): array {
         return [
             'draft' => __('Draft', ECOLEPEDIA_MARKETPLACE_TEXTDOMAIN),

@@ -7,6 +7,9 @@
 - **Frontend templates**: `/templates` with override support
 - **Assets**: `/assets/css` and `/assets/js`
 
+## Required Pages
+On activation, `Pages::create_required_pages()` creates the customer, author, checkout, and dashboard pages with their shortcodes pre-filled.
+
 ## Extending Payment Gateways
 1. Add a gateway class under `/includes` (e.g., `class-gateway-stripe.php`).
 2. Implement a `charge()` method and hook into checkout handling.
@@ -15,6 +18,7 @@
 
 ## Data Model Notes
 - Orders are a CPT (`ecolepedia_order`).
+- Subjects and document types are seeded on activation via `Orders::seed_taxonomies()`.
 - Heavy relational data (messages, transactions, revisions, author profiles) uses custom tables created via `Database::install()`.
 
 ## Security Checklist

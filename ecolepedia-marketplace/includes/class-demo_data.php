@@ -11,20 +11,7 @@ class Demo_Data {
     }
 
     public static function generate(): void {
-        $subjects = ['Business', 'Psychology', 'Literature', 'Engineering'];
-        $doc_types = ['Essay', 'Research Paper', 'Case Study', 'Presentation'];
-
-        foreach ($subjects as $subject) {
-            if (!term_exists($subject, 'ecolepedia_subject')) {
-                wp_insert_term($subject, 'ecolepedia_subject');
-            }
-        }
-
-        foreach ($doc_types as $type) {
-            if (!term_exists($type, 'ecolepedia_document_type')) {
-                wp_insert_term($type, 'ecolepedia_document_type');
-            }
-        }
+        Orders::seed_taxonomies();
 
         $author_id = username_exists('demo_author');
         if (!$author_id) {

@@ -18,6 +18,14 @@ class Assets {
             [],
             ECOLEPEDIA_MARKETPLACE_VERSION
         );
+        $settings = Settings::get();
+        $inline = sprintf(
+            ':root{--ecolepedia-primary:%1$s;--ecolepedia-secondary:%2$s;--ecolepedia-bg:%3$s;}',
+            esc_html($settings['accent_color']),
+            esc_html($settings['secondary_color']),
+            esc_html($settings['background_color'])
+        );
+        wp_add_inline_style('ecolepedia-marketplace-public', $inline);
         wp_enqueue_script(
             'ecolepedia-marketplace-public',
             ECOLEPEDIA_MARKETPLACE_URL . 'assets/js/public.js',
