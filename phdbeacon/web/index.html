@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PhDBeacon Europe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-50 text-slate-900">
+    <header class="bg-white shadow">
+      <div class="max-w-6xl mx-auto px-4 py-6">
+        <p class="text-sm uppercase tracking-widest text-indigo-600">PhDBeacon Europe</p>
+        <h1 class="text-3xl md:text-4xl font-semibold">Find funded PhD positions across Europe—fast.</h1>
+        <p class="text-slate-600 mt-2">Browse curated PhD vacancies from European universities and research institutes.</p>
+      </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <section class="bg-white rounded-2xl shadow p-6 space-y-4">
+        <div class="flex flex-col md:flex-row gap-4 md:items-end">
+          <div class="flex-1">
+            <label class="text-sm font-semibold">Search</label>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search by title, university, domain..."
+              class="mt-2 w-full rounded-lg border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div class="flex-1">
+            <label class="text-sm font-semibold">Sort</label>
+            <select
+              id="sortSelect"
+              class="mt-2 w-full rounded-lg border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="newest">Newest</option>
+              <option value="deadline_asc">Deadline ↑</option>
+              <option value="deadline_desc">Deadline ↓</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div>
+            <label class="text-sm font-semibold">Country</label>
+            <select id="countryFilter" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2"></select>
+          </div>
+          <div>
+            <label class="text-sm font-semibold">University</label>
+            <select id="universityFilter" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2"></select>
+          </div>
+          <div>
+            <label class="text-sm font-semibold">Domain</label>
+            <select id="domainFilter" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2"></select>
+          </div>
+          <div>
+            <label class="text-sm font-semibold">Field</label>
+            <select id="fieldFilter" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2"></select>
+          </div>
+          <div>
+            <label class="text-sm font-semibold">Status</label>
+            <select id="statusFilter" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2"></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-semibold">Latest vacancies</h2>
+          <p id="resultsCount" class="text-sm text-slate-500"></p>
+        </div>
+        <div id="positionsGrid" class="grid gap-4"></div>
+        <div class="flex items-center justify-between">
+          <button id="prevPage" class="px-4 py-2 rounded-lg border border-slate-200">Previous</button>
+          <p id="pageInfo" class="text-sm text-slate-500"></p>
+          <button id="nextPage" class="px-4 py-2 rounded-lg border border-slate-200">Next</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-white border-t">
+      <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-slate-500">
+        Owned by Naeem Ur Rehman
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
