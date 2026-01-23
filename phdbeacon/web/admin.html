@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PhDBeacon Europe Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-50 text-slate-900">
+    <header class="bg-white shadow">
+      <div class="max-w-5xl mx-auto px-4 py-6">
+        <h1 class="text-2xl font-semibold">Admin Console</h1>
+        <p class="text-sm text-slate-500">Manage RSS sources for PhDBeacon Europe.</p>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 space-y-6">
+      <section class="bg-white rounded-2xl shadow p-6 space-y-4">
+        <h2 class="text-lg font-semibold">Add RSS Source</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-semibold">Name</label>
+            <input id="sourceName" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2" />
+          </div>
+          <div>
+            <label class="text-sm font-semibold">RSS URL</label>
+            <input id="sourceUrl" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2" />
+          </div>
+          <div>
+            <label class="text-sm font-semibold">Country code (optional)</label>
+            <input id="sourceCountry" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2" />
+          </div>
+          <div>
+            <label class="text-sm font-semibold">Admin key</label>
+            <input id="adminKey" type="password" class="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2" />
+          </div>
+        </div>
+        <button id="addSource" class="px-4 py-2 rounded-lg bg-indigo-600 text-white">Add source</button>
+      </section>
+
+      <section class="bg-white rounded-2xl shadow p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-semibold">Sources</h2>
+          <button id="runAll" class="px-4 py-2 rounded-lg border border-slate-200">Run all</button>
+        </div>
+        <div id="sourcesList" class="space-y-3"></div>
+      </section>
+    </main>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
